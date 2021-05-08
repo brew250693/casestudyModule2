@@ -8,7 +8,7 @@ import model.TypeOfEmployee;
 public class EmployeeFactory {
     private EmployeeFactory() {
     }
-    public static Employee getEmployee(TypeOfEmployee typeOfEmployee, String name, int age, int phoneNumber, String email, String id, String adress){
+    public static Employee getEmployee(TypeOfEmployee typeOfEmployee, String name, int age, String phoneNumber, String email, String id, String adress){
         Employee e = null;
         switch (typeOfEmployee){
             case FullTime:

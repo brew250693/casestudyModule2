@@ -19,25 +19,32 @@ public class Client {
         EmployeeManager khanh = new EmployeeManager(employeesList);
         FileManager khanh1 = FileManager.getINSTANCE();
 
-        Employee e1 = EmployeeFactory.getEmployee(TypeOfEmployee.FullTime, "Nguyen Van A", 25, 0123123123, "nguyenvana@gmail.com", "111222", "HaNoi");
-        Employee e2 = EmployeeFactory.getEmployee(TypeOfEmployee.PartTime, "Nguyen Van B", 25, 0123123124, "nguyenvanb@gmail.com", "111223", "HaiPhong");
+        Employee e1 = EmployeeFactory.getEmployee(TypeOfEmployee.FullTime, "Nguyen Van A", 25, "0123123123", "nguyenvana@gmail.com", "111222", "HaNoi");
+        Employee e2 = EmployeeFactory.getEmployee(TypeOfEmployee.PartTime, "Nguyen Van B", 25, "0123123124", "nguyenvanb@gmail.com", "111223", "HaiPhong");
+        ((FullTimeEmployee) e1).setBonusMoney(100000);
+        ((FullTimeEmployee) e1).setFineMoney(50000);
+        ((FullTimeEmployee) e1).setHardSalary(1000000);
+        ((PartTimeEmployee) e2).setTimeWork(50);
+        ((PartTimeEmployee) e2).setWage(20000);
         khanh.addNewEmployee(e1);
         khanh.addNewEmployee(e2);
         while (true) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Mời bạn nhập lựa chọn: ");
+            System.out.println("======================");
             System.out.println("Bấm 1 để lấy thông tin nhân viên từ file");
-            System.out.println("Bấm 2 để ghi thông tin nhân viên từ file");
+            System.out.println("Bấm 2 để thêm nhân viên ");
             System.out.println("Bấm 3 để hiển thị thông tin nhân viên");
             System.out.println("Bấm 4 để tìm kiếm nhân viên");
             System.out.println("Bấm 5 để cập nhật nhân viên");
             System.out.println("Bấm 6 để xóa nhân viên");
-            System.out.println("Bấm 7 để tính lương nhân viên theo từng loại");
+            System.out.println("Bấm 7 để tính lương nhân viên theo tên");
             System.out.println("Bấm 8 để phân loại nhân viên");
             int choose = sc.nextInt();
             switch (choose) {
                 case 1:
                     employeesList = khanh1.getData();
+                    System.out.println(employeesList);
                     break;
                 case 2:
                     System.out.println("Nhập a để thêm nhân viên FullTime");
@@ -54,7 +61,7 @@ public class Client {
                             int age = sc2.nextInt();
                             Scanner sc3 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập số điện thoại: ");
-                            int phoneNumber = sc3.nextInt();
+                            String phoneNumber = sc3.nextLine();
                             Scanner sc4 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập số email: ");
                             String email = sc4.nextLine();
@@ -88,7 +95,7 @@ public class Client {
                             int age1 = sc8.nextInt();
                             Scanner sc9 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập số điện thoại: ");
-                            int phoneNumber1 = sc9.nextInt();
+                            String phoneNumber1 = sc9.nextLine();
                             Scanner sc10 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập số email: ");
                             String email1 = sc10.nextLine();
@@ -115,13 +122,90 @@ public class Client {
                     khanh.showAllEmployee();
                     break;
                 case 4:
-
+                    String name3;
+                    Scanner sc18 = new Scanner(System.in);
+                    System.out.println("Mời bạn nhập tên cần tìm: ");
+                    name3 = sc18.nextLine();
+                    khanh.searchByName(name3);
+                    break;
                 case 5:
+                    System.out.println("Nhập a để sửa nhân viên FullTime");
+                    System.out.println("Nhập b để sửa nhân viên PartTime");
+                    Scanner u = new Scanner(System.in);
+                    String type1 = u.nextLine();
+                    switch (type1) {
+                        case "a":
+                            System.out.println("Nhập tên nhân viên FullTime cần sửa");
+                            Scanner n = new Scanner(System.in);
+                            String name = n.nextLine();
+                            System.out.println("Nhập tiền thưởng cần sửa");
+                            Scanner n1 = new Scanner(System.in);
+                            double bonusMoney = n1.nextDouble();
+                            System.out.println("Nhập tiền phạt cần sửa");
+                            Scanner n2 = new Scanner(System.in);
+                            double fineMoney = n2.nextDouble();
+                            System.out.println("Nhập lương cứng cần sửa");
+                            Scanner n3 = new Scanner(System.in);
+                            double hardSalary = n3.nextDouble();
+                            khanh.updateEmployeeFullTime(name, bonusMoney, fineMoney, hardSalary);
+                            break;
+                        case "b":
+                            System.out.println("Nhập tên nhân viên PartTime cần sửa");
+                            Scanner n4 = new Scanner(System.in);
+                            String name1 = n4.nextLine();
+                            System.out.println("Nhập số giờ làm cần sửa");
+                            Scanner n5 = new Scanner(System.in);
+                            double timeWork = n5.nextDouble();
+                            System.out.println("Nhập lương theo giờ cần sửa");
+                            Scanner n6 = new Scanner(System.in);
+                            double wage = n6.nextDouble();
+                            khanh.updateEmployeePartTme(name1, timeWork, wage);
+                            break;
+                    }
+                    break;
+                case 6:
+                    System.out.println("Nhập tên nhân viên cần xóa");
+                    Scanner n = new Scanner(System.in);
+                    String name = n.nextLine();
+                    khanh.deleteEmployee(name);
+                    break;
+                case 7:
+                    System.out.println("Mời bạn chọn nhân viên cần tính lương: ");
+                    System.out.println("Nhấn a để chọn nhân viên FullTime");
+                    System.out.println("Nhấn b để chọn nhân viên PartTime");
+                    Scanner u1 = new Scanner(System.in);
+                    String type2 = u1.nextLine();
 
-
-
+                    switch (type2) {
+                        case "a":
+                            System.out.println("Tên nhân viên FullTime cần tính lương:");
+                            Scanner n1 = new Scanner(System.in);
+                            String name1 = n1.nextLine();
+                            khanh.getAmountOfFullTimeEmployee(name1);
+                            break;
+                        case "b":
+                            System.out.println("Tên nhân viên PartTime cần tính lương:");
+                            Scanner n2 = new Scanner(System.in);
+                            String name2 = n2.nextLine();
+                            khanh.getAmountOfPartTimeEmployee(name2);
+                            break;
+                    }
+                    break;
+                case 8:
+                    System.out.println("Danh sách nhân viên trong công ty");
+                    System.out.println("Nhấn a để hiển thị danh sách nhân viên FullTime");
+                    System.out.println("Nhấn b để hiển thị danh sách nhân viên PartTime");
+                    Scanner u2 = new Scanner(System.in);
+                    String type3 = u2.nextLine();
+                    switch (type3) {
+                        case "a":
+                            khanh.showAllFullTimeEmployee();
+                            break;
+                        case "b":
+                            khanh.showAllPartTimeEmployee();
+                            break;
+                    }
             }
-
         }
     }
 }

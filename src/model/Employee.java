@@ -2,10 +2,10 @@ package model;
 
 import java.io.Serializable;
 
-public class Employee implements Serializable {
+public abstract class Employee implements Serializable {
     private String name;
     private int age;
-    private int phoneNumber;
+    private String phoneNumber;
     private String email;
     private String id;
     private String adress;
@@ -25,7 +25,7 @@ public class Employee implements Serializable {
     public Employee() {
     }
 
-    public Employee(String name, int age, int phoneNumber, String email, String id, String adress) {
+    public Employee(String name, int age, String phoneNumber, String email, String id, String adress) {
         this.name = name;
         this.age = age;
         this.phoneNumber = phoneNumber;
@@ -50,11 +50,11 @@ public class Employee implements Serializable {
         this.age = age;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -81,8 +81,7 @@ public class Employee implements Serializable {
     public void setAdress(String adress) {
         this.adress = adress;
     }
-
-
+    public abstract double getAmountOfStaffs();
 
 
 }
