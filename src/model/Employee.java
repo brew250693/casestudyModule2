@@ -9,6 +9,19 @@ public abstract class Employee implements Serializable {
     private String email;
     private String id;
     private String adress;
+    private boolean status;
+
+    public boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public Employee(boolean status) {
+        this.status = status;
+    }
 
     @Override
     public String toString() {

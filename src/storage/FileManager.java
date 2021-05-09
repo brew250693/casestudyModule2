@@ -54,11 +54,20 @@ public class FileManager implements EmployeeData {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//            objectOutputStream.close();
-//            fileOutputStream.close();
+            try {
+                objectOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                fileOutputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+
 
 
     }

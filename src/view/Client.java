@@ -2,10 +2,8 @@ package view;
 
 import cotroller.EmployeeFactory;
 import cotroller.EmployeeManager;
-import model.Employee;
-import model.FullTimeEmployee;
-import model.PartTimeEmployee;
-import model.TypeOfEmployee;
+import cotroller.LoginManager;
+import model.*;
 import storage.FileManager;
 
 import java.io.IOException;
@@ -15,6 +13,9 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        LoginManager khanh2 = new LoginManager();
+        khanh2.addAccount("admin", "admin");
+        khanh2.accountLogin();
         List<Employee> employeesList = new ArrayList<>();
         EmployeeManager khanh = new EmployeeManager(employeesList);
         FileManager khanh1 = FileManager.getINSTANCE();
@@ -23,11 +24,15 @@ public class Client {
         Employee e2 = EmployeeFactory.getEmployee(TypeOfEmployee.PartTime, "Nguyen Van B", 25, "0123123124", "nguyenvanb@gmail.com", "111223", "HaiPhong");
         ((FullTimeEmployee) e1).setBonusMoney(100000);
         ((FullTimeEmployee) e1).setFineMoney(50000);
-        ((FullTimeEmployee) e1).setHardSalary(1000000);
-        ((PartTimeEmployee) e2).setTimeWork(50);
+        ((FullTimeEmployee) e1).setHardSalary(5000000);
+        ((FullTimeEmployee) e1).setStatus(true);
+        ((PartTimeEmployee) e2).setTimeWork(200);
         ((PartTimeEmployee) e2).setWage(20000);
+        ((PartTimeEmployee) e2).setStatus(false);
         khanh.addNewEmployee(e1);
         khanh.addNewEmployee(e2);
+
+
         while (true) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Mời bạn nhập lựa chọn: ");
@@ -38,8 +43,10 @@ public class Client {
             System.out.println("Bấm 4 để tìm kiếm nhân viên");
             System.out.println("Bấm 5 để cập nhật nhân viên");
             System.out.println("Bấm 6 để xóa nhân viên");
-            System.out.println("Bấm 7 để tính lương nhân viên theo tên");
+            System.out.println("Bấm 7 để hiển thị lương nhân viên theo tên");
             System.out.println("Bấm 8 để phân loại nhân viên");
+            System.out.println("Bấm 9 để kiểm tra trạng thái nhân viên");
+            System.out.println("Bấm 10 để hiển thị lương trung bình các nhân viên trong công ty:");
             int choose = sc.nextInt();
             switch (choose) {
                 case 1:
@@ -205,6 +212,38 @@ public class Client {
                             khanh.showAllPartTimeEmployee();
                             break;
                     }
+                    break;
+                case 9:
+                    System.out.println("------ Chọn trạng thái hiển thị ------");
+                    System.out.println("1. True");
+                    System.out.println("2. False");
+                    int selection = new Scanner(System.in).nextInt();
+                    switch (selection) {
+                        case 1:
+                            khanh.checkStatusEmployee(true);
+                            break;
+                        case 2:
+                            khanh.checkStatusEmployee(false);
+                            break;
+                    }
+                    break;
+                case 10:
+                    System.out.println("Lương trung bình các nhân viên trong công ty:");
+                    System.out.println("Nhấn a để hiển thị lương trung bình nhân viên FullTime");
+                    System.out.println("Nhấn b để hiển thị lương trung bình nhân viên PartTime");
+                    Scanner avg = new Scanner(System.in);
+                    String avg1 = avg.nextLine();
+                    switch (avg1){
+                        case "a":
+                            System.out.println("Lương trung bình nhân viên FullTime:");
+                            khanh.getAVGOfEmployeeFullTime();
+                            break;
+                        case "b":
+                            System.out.println("Lương trung bình nhân viên PartTime:");
+                            khanh.getAVGOfEmployeePartTime();
+                            break;
+                    }
+                    break;
             }
         }
     }

@@ -69,24 +69,27 @@ public class EmployeeManager {
             }
         }
     }
-    public void deleteEmployee(String name){
+
+    public void deleteEmployee(String name) {
         for (int i = 0; i < employees.size(); i++) {
-            if(employees.get(i).getName().equals(name)){
+            if (employees.get(i).getName().equals(name)) {
                 employees.remove(employees.get(i));
             }
         }
     }
-    public void getAmountOfFullTimeEmployee(String name){
-        for (Employee e:employees
-             ) {
-            if(e instanceof FullTimeEmployee){
+
+    public void getAmountOfFullTimeEmployee(String name) {
+        for (Employee e : employees
+        ) {
+            if (e instanceof FullTimeEmployee) {
                 FullTimeEmployee a = (FullTimeEmployee) e;
-                if(a.getName().equals(name)){
-                System.out.println(a.getAmountOfStaffs());
+                if (a.getName().equals(name)) {
+                    System.out.println(a.getAmountOfStaffs());
                 }
             }
         }
     }
+
     public void getAmountOfPartTimeEmployee(String name) {
         for (Employee e : employees
         ) {
@@ -96,21 +99,54 @@ public class EmployeeManager {
             }
         }
     }
-    public void showAllFullTimeEmployee(){
-        for (Employee e: employees
-             ) {
-            if(e instanceof FullTimeEmployee){
+
+    public void showAllFullTimeEmployee() {
+        for (Employee e : employees
+        ) {
+            if (e instanceof FullTimeEmployee) {
                 FullTimeEmployee a = (FullTimeEmployee) e;
                 System.out.println(a);
             }
         }
     }
+
     public void showAllPartTimeEmployee() {
         for (Employee e : employees
         ) {
             if (e instanceof PartTimeEmployee) {
                 PartTimeEmployee a = (PartTimeEmployee) e;
                 System.out.println(a);
+            }
+        }
+    }
+
+    public void checkStatusEmployee(boolean status) {
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getStatus() == status) {
+                System.out.println(employees.get(i).getName());
+
+            }
+        }
+    }
+    public void getAVGOfEmployeeFullTime(){
+        double avg = 0;
+        for (Employee e:employees
+             ) {
+            if(e instanceof FullTimeEmployee){
+                FullTimeEmployee a = (FullTimeEmployee) e;
+                avg = a.getAmountOfStaffs()/employees.size();
+                System.out.println(avg);
+            }
+        }
+    }
+    public void getAVGOfEmployeePartTime(){
+        double avg = 0;
+        for (Employee e:employees
+        ) {
+            if(e instanceof PartTimeEmployee){
+                PartTimeEmployee a = (PartTimeEmployee) e;
+                avg = a.getAmountOfStaffs()/employees.size();
+                System.out.println(avg);
             }
         }
     }
