@@ -13,25 +13,13 @@ import java.util.Scanner;
 
 public class Client {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
+        List<Employee> employeesList = new ArrayList<>();
         LoginManager khanh2 = new LoginManager();
         khanh2.addAccount("admin", "admin");
         khanh2.accountLogin();
-        List<Employee> employeesList = new ArrayList<>();
-        EmployeeManager khanh = new EmployeeManager(employeesList);
         FileManager khanh1 = FileManager.getINSTANCE();
-
-        Employee e1 = EmployeeFactory.getEmployee(TypeOfEmployee.FullTime, "Nguyen Van A", 25, "0123123123", "nguyenvana@gmail.com", "111222", "HaNoi");
-        Employee e2 = EmployeeFactory.getEmployee(TypeOfEmployee.PartTime, "Nguyen Van B", 25, "0123123124", "nguyenvanb@gmail.com", "111223", "HaiPhong");
-        ((FullTimeEmployee) e1).setBonusMoney(100000);
-        ((FullTimeEmployee) e1).setFineMoney(50000);
-        ((FullTimeEmployee) e1).setHardSalary(5000000);
-        ((FullTimeEmployee) e1).setStatus(true);
-        ((PartTimeEmployee) e2).setTimeWork(200);
-        ((PartTimeEmployee) e2).setWage(20000);
-        ((PartTimeEmployee) e2).setStatus(false);
-        khanh.addNewEmployee(e1);
-        khanh.addNewEmployee(e2);
-
+        employeesList = khanh1.getData();
+        EmployeeManager khanh = new EmployeeManager(employeesList);
 
         while (true) {
             Scanner sc = new Scanner(System.in);
@@ -41,12 +29,13 @@ public class Client {
             System.out.println("Bấm 2 để thêm nhân viên ");
             System.out.println("Bấm 3 để hiển thị thông tin nhân viên");
             System.out.println("Bấm 4 để tìm kiếm nhân viên");
-            System.out.println("Bấm 5 để cập nhật nhân viên");
+            System.out.println("Bấm 5 để cập nhật lương nhân viên");
             System.out.println("Bấm 6 để xóa nhân viên");
             System.out.println("Bấm 7 để hiển thị lương nhân viên theo tên");
             System.out.println("Bấm 8 để phân loại nhân viên");
             System.out.println("Bấm 9 để kiểm tra trạng thái nhân viên");
-            System.out.println("Bấm 10 để hiển thị lương trung bình các nhân viên trong công ty:");
+            System.out.println("Bấm 10 để hiển thị lương trung bình các nhân viên trong công ty");
+            System.out.println("Bấm 11 để thoát");
             int choose = sc.nextInt();
             switch (choose) {
                 case 1:
@@ -87,10 +76,14 @@ public class Client {
                             Scanner sc15 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập Lương cứng: ");
                             double hardSalary = sc15.nextDouble();
+                            Scanner sc18 = new Scanner(System.in);
+                            System.out.println("Mời bạn nhập trạng thái: ");
+                            Boolean status = sc18.nextBoolean();
                             Employee e = EmployeeFactory.getEmployee(TypeOfEmployee.FullTime, name, age, phoneNumber, email, id, adress);
                             ((FullTimeEmployee) e).setBonusMoney(bonusMoney);
                             ((FullTimeEmployee) e).setFineMoney(fineMoney);
                             ((FullTimeEmployee) e).setHardSalary(hardSalary);
+                            ((FullTimeEmployee) e).setStatus(status);
                             khanh.addNewEmployee(e);
                             break;
                         case "b":
@@ -118,9 +111,13 @@ public class Client {
                             Scanner sc17 = new Scanner(System.in);
                             System.out.println("Mời bạn nhập lương theo giờ: ");
                             double wage = sc17.nextDouble();
+                            Scanner sc19 = new Scanner(System.in);
+                            System.out.println("Mời bạn nhập trạng thái: ");
+                            boolean status1 = sc19.nextBoolean();
                             Employee e3 = EmployeeFactory.getEmployee(TypeOfEmployee.PartTime, name1, age1, phoneNumber1, email1, id1, adress1);
                             ((PartTimeEmployee) e3).setTimeWork(timeWork);
                             ((PartTimeEmployee) e3).setWage(wage);
+                            ((PartTimeEmployee) e3).setStatus(status1);
                             khanh.addNewEmployee(e3);
                             break;
                     }
@@ -136,8 +133,8 @@ public class Client {
                     khanh.searchByName(name3);
                     break;
                 case 5:
-                    System.out.println("Nhập a để sửa nhân viên FullTime");
-                    System.out.println("Nhập b để sửa nhân viên PartTime");
+                    System.out.println("Nhập a để sửa lương nhân viên FullTime");
+                    System.out.println("Nhập b để sửa lương nhân viên PartTime");
                     Scanner u = new Scanner(System.in);
                     String type1 = u.nextLine();
                     switch (type1) {
@@ -177,7 +174,7 @@ public class Client {
                     khanh.deleteEmployee(name);
                     break;
                 case 7:
-                    System.out.println("Mời bạn chọn nhân viên cần tính lương: ");
+                    System.out.println("Mời bạn chọn nhân viên cần hiển thị lương: ");
                     System.out.println("Nhấn a để chọn nhân viên FullTime");
                     System.out.println("Nhấn b để chọn nhân viên PartTime");
                     Scanner u1 = new Scanner(System.in);
@@ -185,13 +182,13 @@ public class Client {
 
                     switch (type2) {
                         case "a":
-                            System.out.println("Tên nhân viên FullTime cần tính lương:");
+                            System.out.println("Tên nhân viên FullTime cần hiển thị lương:");
                             Scanner n1 = new Scanner(System.in);
                             String name1 = n1.nextLine();
                             khanh.getAmountOfFullTimeEmployee(name1);
                             break;
                         case "b":
-                            System.out.println("Tên nhân viên PartTime cần tính lương:");
+                            System.out.println("Tên nhân viên PartTime cần hiển thị lương:");
                             Scanner n2 = new Scanner(System.in);
                             String name2 = n2.nextLine();
                             khanh.getAmountOfPartTimeEmployee(name2);
@@ -215,8 +212,8 @@ public class Client {
                     break;
                 case 9:
                     System.out.println("------ Chọn trạng thái hiển thị ------");
-                    System.out.println("1. True");
-                    System.out.println("2. False");
+                    System.out.println("1. True(Đang làm việc)");
+                    System.out.println("2. False(Đã nghỉ)");
                     int selection = new Scanner(System.in).nextInt();
                     switch (selection) {
                         case 1:
@@ -244,6 +241,11 @@ public class Client {
                             break;
                     }
                     break;
+                case 11:
+                    System.err.println("Cảm ơn!");
+                    System.exit(0);
+                    break;
+
             }
         }
     }

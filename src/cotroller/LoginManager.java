@@ -43,8 +43,9 @@ public class LoginManager {
             }
             break;
         }
-        if(check){
+        if(check==true){
             System.out.println("Đăng nhập thành công: ");
+            System.out.println("++++++++++++++++++++++++");
             return true;
         }
         else System.out.println("Sai tài khoản hoặc mật khẩu: ");
